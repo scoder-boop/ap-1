@@ -1,0 +1,29 @@
+<div *ngIf="profile">
+
+  <h2>{{profile.id ? 'Update' : ' New'}} Profile: {{profile.id}}</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>User name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{profile.id}}</td>
+        <td><input [(ngModel)]="profile.username" placeholder="username" /></td>
+        <td><input [(ngModel)]="profile.firstName" placeholder="first name" /></td>
+        <td><input [(ngModel)]="profile.lastName" placeholder="last name" /></td>
+        <td><input [(ngModel)]="profile.email" placeholder="email" /></td>
+        <td><input [(ngModel)]="profile.address" placeholder="address" /></td>
+        <td><input [(ngModel)]="profile.phoneNumber" placeholder="phone number" /></td>
+      </tr>
+    </tbody>
+  </table>
+  <p><button (click)="save()">Save Changes</button></p>
+</div>

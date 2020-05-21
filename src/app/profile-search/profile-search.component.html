@@ -1,0 +1,13 @@
+<div id="search-component">
+  <h4><label for="search-box">Profile Username Search</label></h4>
+
+  <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+
+  <ul class="search-result">
+    <li *ngFor="let profile of profiles$ | async" >
+      <a routerLink="/detail/{{profile.id}}">
+        {{profile.username}}
+      </a>
+    </li>
+  </ul>
+</div>

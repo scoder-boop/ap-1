@@ -1,0 +1,144 @@
+<h2>Active Profiles</h2>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+	<ng-container matColumnDef="id">
+		<mat-header-cell *matHeaderCellDef>id</mat-header-cell>
+		<mat-cell *matCellDef="let profile"> {{profile.id}} </mat-cell>
+	</ng-container>
+	<ng-container matColumnDef="username">
+		<mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+		<mat-cell *matCellDef="let profile">
+			<div *ngIf="!profile.editable">{{profile.username}}</div>
+			<div *ngIf="profile.editable"><input [(ngModel)]="profile.username" placeholder="username" /></div>
+		</mat-cell>
+	</ng-container>
+	<ng-container matColumnDef="firstName">
+		<mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+		<mat-cell *matCellDef="let profile">
+			<div *ngIf="!profile.editable">{{profile.firstName}}</div>
+			<div *ngIf="profile.editable"><input [(ngModel)]="profile.firstName" placeholder="first name" />
+			</div>
+		</mat-cell>
+	</ng-container>
+	<ng-container matColumnDef="lastName">
+		<mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+		<mat-cell *matCellDef="let profile">
+			<div *ngIf="!profile.editable">{{profile.lastName}}</div>
+			<div *ngIf="profile.editable"><input [(ngModel)]="profile.lastName" placeholder="last name" /></div>
+		</mat-cell>
+	</ng-container>
+	<ng-container matColumnDef="email">
+		<mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+		<mat-cell *matCellDef="let profile">
+			<div *ngIf="!profile.editable">{{profile.email}}</div>
+			<div *ngIf="profile.editable"><input [(ngModel)]="profile.email" placeholder="email" /></div>
+		</mat-cell>
+	</ng-container>
+	<ng-container matColumnDef="address">
+		<mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+		<mat-cell *matCellDef="let profile">
+			<div *ngIf="!profile.editable">{{profile.address}}</div>
+			<div *ngIf="profile.editable"><input [(ngModel)]="profile.address" placeholder="address" /></div>
+		</mat-cell>
+	</ng-container>
+	<ng-container matColumnDef="phoneNumber">
+		<mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+		<mat-cell *matCellDef="let profile">
+			<div *ngIf="!profile.editable">{{profile.phoneNumber}}</div>
+			<div *ngIf="profile.editable"><input [(ngModel)]="profile.phoneNumber" placeholder="phone number" />
+			</div>
+		</mat-cell>
+	</ng-container>
+	<ng-container matColumnDef="actions">
+		<mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+		<mat-cell *matCellDef="let profile">
+			<button mat-button (click)="archive(profile)">X</button>
+			<button mat-button (click)="editProfile(profile)">Edit</button>
+			<button mat-button (click)="updateProfile(profile)">Save</button>
+		</mat-cell>
+	</ng-container>
+	<mat-cell *matCellDef="let profile"><button class="delete" title="archive profile"
+			(click)="archive(profile)">x</button></mat-cell>
+	<mat-cell *matCellDef="let profile"><button class="save" title="save profile"
+			(click)="updateProfile(profile)">Save</button></mat-cell>
+	<mat-cell *matCellDef="let profile"><button class="edit" title="edit profile"
+			(click)="editProfile(profile)">Edit</button></mat-cell>
+	<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+	<mat-row *matRowDef="let row; columns: displayedColumns">
+	</mat-row>
+</mat-table>
+
+<!--ul>
+	<table mat-table>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>User name</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Address</th>
+				<th>Phone Number</th>
+				<th>Deactivate</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let profile of profiles">
+				<!--td>{{profile.id}}</td>
+			<td>{{profile.username}}</td>
+			<td>{{profile.firstName}}</td>
+			<td>{{profile.lastName}}</td>
+			<td>{{profile.email}}</td>
+			<td>{{profile.address}}</td>
+			<td>{{profile.phoneNumber}}</td-->
+<!--td>{{profile.id}}</td>
+				<td>
+					<div *ngIf="!profile.editable">{{profile.username}}</div>
+					<div *ngIf="profile.editable"><input [(ngModel)]="profile.username" placeholder="username" /></div>
+				</td>
+				<td>
+					<div *ngIf="!profile.editable">{{profile.firstName}}</div>
+					<div *ngIf="profile.editable"><input [(ngModel)]="profile.firstName" placeholder="first name" />
+					</div>
+				</td>
+				<td>
+					<div *ngIf="!profile.editable">{{profile.lastName}}</div>
+					<div *ngIf="profile.editable"><input [(ngModel)]="profile.lastName" placeholder="last name" /></div>
+				</td>
+				<td>
+					<div *ngIf="!profile.editable">{{profile.email}}</div>
+					<div *ngIf="profile.editable"><input [(ngModel)]="profile.email" placeholder="email" /></div>
+				</td>
+				<td>
+					<div *ngIf="!profile.editable">{{profile.address}}</div>
+					<div *ngIf="profile.editable"><input [(ngModel)]="profile.address" placeholder="address" /></div>
+				</td>
+				<td>
+					<div *ngIf="!profile.editable">{{profile.phoneNumber}}</div>
+					<div *ngIf="profile.editable"><input [(ngModel)]="profile.phoneNumber" placeholder="phone number" />
+					</div>
+				</td>
+				<td><button class="delete" title="archive profile" (click)="archive(profile)">x</button></td>
+				<td><button class="save" title="save profile" (click)="updateProfile(profile)">Save</button></td>
+				<td><button class="edit" title="edit profile" (click)="editProfile(profile)">Edit</button></td>
+			</tr>
+		</tbody>
+	</table>
+
+</ul-->
+
+<div>
+	<!--label>Profile username:
+		<input #profileUsername />
+	</label>
+	<!-- (click) passes input value to add() and then clears the input -->
+	<!--button (click)="add(profileUsername.value); profileUsername.value=''"-->
+	<button (click)="add()">
+		Add Profile
+	</button>
+	<button (click)="refresh()">
+		Refresh
+	</button>
+</div>
+
+<app-profile-detail [profile]="selectedProfile"></app-profile-detail>
