@@ -42,7 +42,7 @@ export class ProfilesComponent implements OnInit {
   constructor(private profileService: ProfileService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.getProfiles();
+ //   this.getProfiles();
   }
 
   onSelect(profile: Profile): void {
@@ -50,6 +50,7 @@ export class ProfilesComponent implements OnInit {
     this.messageService.add(`ProfileService: Selected profile id=${profile.id}`);
   }
 
+/*
   getProfiles(): void {
     this.messageService.add(`ProfileService: Getting Profiles`);
     this.profileService.getProfiles()
@@ -60,6 +61,7 @@ export class ProfilesComponent implements OnInit {
       });
     this.messageService.add(`ProfileService: Profiles done`);
   }
+ */
 
   changeArchiveStatus(profile: Profile): void {
     this.messageService.add(`ProfilesComponent: Trying to change Archive Status`);
@@ -73,32 +75,17 @@ export class ProfilesComponent implements OnInit {
   }
 
   updateProfile(profile: Profile) {
-    this.messageService.add(`ProfileService: Updating Profiles`);
+    this.messageService.add(`ProfilesComponent: Updating Profiles`);
     this.profileService.updateProfile(profile)
       .subscribe(response => {
         this.httpCode = response.code;
       });
     profile.editable = !profile.editable;
-    this.messageService.add(`ProfileService: Profile updated`);
+    this.messageService.add(`ProfilesComponent: Profile updated`);
 
   }
 
   onRowClicked(): void {
-  }
-
-  refresh(): void {
-    this.getProfiles();
-  }
-
-  refresh2(): void {
-/*
-    this.service.method().subscribe(resources => {
-      this.dataSource.data = resources;
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
- */
-    this.table.renderRows();
   }
 
   editProfile(profile) {
@@ -107,24 +94,34 @@ export class ProfilesComponent implements OnInit {
 
   addNew(): void {
     this.messageService.add("Profile: Creating new profile");
-    this.messageService.add(`ProfileDetail: Trying to add 1`);
+    console.log("new");
+    console.log(this.newProfile);
+    if (!this.newProfile.username || !this.newProfile.firstName || !this.newProfile.lastName) {
+        this.messageService.add(`ProfilesComponent: username, first or last name emtpy - please update`);
+        return;
+    }
     this.profileService.addProfile(this.newProfile)
         .subscribe(response => {
           this.httpCode = response.code;
           if (this.httpCode == 200) {
-            this.messageService.add(`ProfileDetail: Profile added successfully`);
+            this.messageService.add(`ProfilesComponent: Profile added successfully`);
           } else {
-            this.messageService.add(`ProfileDetail: Adding new profile failed. Code ${this.httpCode} Message: ${response.data} `);
+            this.messageService.add(`ProfilesComponent: Adding new profile failed. Code ${this.httpCode} Message: ${response.data} `);
+            return;
           }
         });
-    this.refresh();
-    this.newProfile = new ProfileObject();
+    console.log("1");
+    console.log(this.profiles);
+    this.profiles.push(this.newProfile);
+    console.log("2");
+    console.log(this.profiles);
+    this.newProfile = null;
   }
 
   add(): void {
     this.newProfile = new ProfileObject();
     this.newProfile.editable = true;
-    this.messageService.add("ProfileService: Create new profile");
+    this.messageService.add("ProfilesComponent: Create new profile");
   }
 
 /*   search(text: string, pipe: PipeTransform): Profile[] {
