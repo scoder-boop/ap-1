@@ -72,6 +72,17 @@ export class ProfilesComponent implements OnInit {
     this.messageService.add(`ProfileService: Profile archived`);
   }
 
+  unArchive(profile: Profile): void {
+    this.messageService.add(`ProfileService: Trying to Unarchive Profiles`);
+    profile.active = false;
+    this.dataSource = this.dataSource.data.filter(h => h != profile);
+    this.profileService.updateProfile(profile)
+      .subscribe(response => {
+        this.httpCode = response.code;
+      });
+    this.messageService.add(`ProfileService: Profile unarchived`);
+  }
+
   updateProfile(profile: Profile) {
     this.messageService.add(`ProfileService: Updating Profiles`);
     this.profileService.updateProfile(profile)

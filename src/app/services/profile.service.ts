@@ -100,6 +100,16 @@ export class ProfileService {
     );
   }
 
+  /** UNARCHIVE: make this profile inative on the server */
+  unArchive(profile: Profile): Observable<any> {
+    profile.active = true;
+    const url = `${this.profileUrl}/${profile.id}`;
+    return this.http.put(url, profile, this.httpOptions).pipe(
+      tap(_ => this.log(`archived profile id=${profile.id}`)),
+      catchError(this.handleError<any>('archive'))
+    );
+  }
+
   /** Log a ProfileService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`ProfileService: ${message}`);
