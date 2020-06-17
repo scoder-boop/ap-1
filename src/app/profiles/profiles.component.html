@@ -2,13 +2,13 @@
 
 <h2>Active Profiles</h2>
 
-<!--div class="spinner-container" *ngIf="dataSource.loading$ | async">
+<div class="spinner-container" *ngIf="dataSource.loading$ | async">
 
   <app-progress-spinner></app-progress-spinner>
 
-</div-->
+</div>
 
-<!--div>
+<div>
 
   <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
@@ -77,14 +77,14 @@
     <mat-row *matRowDef="let row; columns: displayedColumns" (clicl)="onRowClicked()">
     </mat-row>
   </mat-table>
-  <mat-paginator
+  <!--mat-paginator
     [length]="length"
     [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions"
     [showFirstLastButtons]="true">
-  </mat-paginator>
+  </mat-paginator-->
 
-</div-->
+</div>
 
 <div>
   <!-- (click) passes input value to add() and then clears the input -->
