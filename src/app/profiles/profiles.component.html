@@ -58,12 +58,12 @@
       <mat-header-cell *matHeaderCellDef>Actions </mat-header-cell>
       <mat-cell *matCellDef="let profile">
         <div *ngIf="profile.active">
-          <button mat-button (click)="archive(profile)">X</button>
+          <button mat-button (click)="changeArchiveStatus(profile)">X</button>
           <button mat-button (click)="editProfile(profile)">Edit</button>
           <button mat-button (click)="updateProfile(profile)">Save</button>
         </div>
         <div *ngIf="!profile.active">
-          <button mat-button (click)="unArchive(profile)">Restore</button>
+          <button mat-button (click)="changeArchiveStatus(profile)">Restore</button>
         </div>
       </mat-cell>
     </ng-container>
