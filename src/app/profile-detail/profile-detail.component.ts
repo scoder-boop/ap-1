@@ -40,12 +40,13 @@ export class ProfileDetailComponent implements OnInit {
         });
 
     } else {
+      this.messageService.add(`ProfileDetail: Trying to add 1`);
       this.profileService.addProfile(this.profile)
         .subscribe(response => {
           this.code = response.code;
           this.data = response.data;
           if (this.code == 200) {
-            this.messageService.add(`ProfileDetail: Profile id=${this.profile.id} added successfully`);
+            this.messageService.add(`ProfileDetail: Profile added successfully`);
           } else {
             this.messageService.add(`ProfileDetail: Adding new profile failed. Code ${this.code} Message: ${this.data} `);
           }

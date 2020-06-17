@@ -1,10 +1,9 @@
 <div *ngIf="profile">
 
-  <h2>{{profile.id ? 'Update' : ' New'}} Profile: {{profile.id}}</h2>
+  <h2>New Profile</h2>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Id</th>
         <th>User name</th>
         <th>First Name</th>
         <th>Last Name</th>
@@ -14,16 +13,35 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>{{profile.id}}</td>
+      <tr ng-form="profileForm">
+        <td><input type="text" [(ngModel)]="profile.username" placeholder="username" /></td>
+        <td><input type="text" [(ngModel)]="profile.firstName" placeholder="first name" /></td>
+        <td><input type="text" [(ngModel)]="profile.lastName" placeholder="last name" /></td>
+        <td><input type="text" [(ngModel)]="profile.email" placeholder="email" /></td>
+        <td><input type="text" [(ngModel)]="profile.address" placeholder="address" /></td>
+        <td><input type="number" [(ngModel)]="profile.phoneNumber" placeholder="phone number" /></td>
+        <td><button class="btn btn-xs btn-primary" type="button" (click)="save()">Save Changes</button></td>
+
+        <!--td>{{profile.id}}</td>
         <td><input [(ngModel)]="profile.username" placeholder="username" /></td>
         <td><input [(ngModel)]="profile.firstName" placeholder="first name" /></td>
         <td><input [(ngModel)]="profile.lastName" placeholder="last name" /></td>
         <td><input [(ngModel)]="profile.email" placeholder="email" /></td>
         <td><input [(ngModel)]="profile.address" placeholder="address" /></td>
-        <td><input [(ngModel)]="profile.phoneNumber" placeholder="phone number" /></td>
+        <td><input [(ngModel)]="profile.phoneNumber" placeholder="phone number" /></td-->
       </tr>
     </tbody>
   </table>
-  <p><button (click)="save()">Save Changes</button></p>
+
+  <!--form #myForm="ngForm" (ngSubmit)="save(); myForm.reset()">
+  <label>{{profile.id}}</label>
+  <label>Username: <input [(ngModel)]="profile.username" name="username" placeholder="username" /></label>
+  <label>First Name: <input [(ngModel)]="profile.firstName" name="first" placeholder="first name" /></label>
+  <label>Last Name: <input [(ngModel)]="profile.lastName" name="last" placeholder="last name" /></label>
+  <label>Email: <input [(ngModel)]="profile.email" name="email" placeholder="email" /></label>
+  <label>Address: <input [(ngModel)]="profile.address" name="address" placeholder="address" /></label>
+  <label>Phone Number: <input [(ngModel)]="profile.phoneNumber" name="phone" placeholder="phone number" /></label>
+  <input type="submit" value="Save">
+  </form-->
+  <!--p><button (click)="save()">Save Changes</button></p-->
 </div>

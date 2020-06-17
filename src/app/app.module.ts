@@ -11,7 +11,11 @@ import { MessageComponent } from './message/message.component';
 import { ProfileSearchComponent } from './profile-search/profile-search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,8 @@ import { MatTableModule } from '@angular/material/table';
     ProfilesComponent,
     ProfileDetailComponent,
     MessageComponent,
-    ProfileSearchComponent
+    ProfileSearchComponent,
+    ProgressSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,11 @@ import { MatTableModule } from '@angular/material/table';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatTableModule
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
