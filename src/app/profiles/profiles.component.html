@@ -2,15 +2,10 @@
 
 <h2>Active Profiles</h2>
 
-<div class="spinner-container" *ngIf="dataSource.loading$ | async">
-
-  <app-progress-spinner></app-progress-spinner>
-
-</div>
 
 <div>
 
-  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <mat-table [dataSource]="profiles" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>id</mat-header-cell>
       <mat-cell *matCellDef="let profile"> {{profile.id}} </mat-cell>

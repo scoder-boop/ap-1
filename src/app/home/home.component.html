@@ -1,0 +1,27 @@
+<div class="courses-panel">
+
+  <h3>All Profiles</h3>
+
+  <!--div class="spinner-container" *ngIf="dataSource.loading$ | async">
+
+    <app-progress-spinner></app-progress-spinner>
+
+  </div-->
+
+  <mat-tab-group>
+
+    <mat-tab label="Active Profiles">
+
+      <app-profiles [profiles]="activeProfiles$ | async"></app-profiles>
+
+    </mat-tab>
+
+    <mat-tab label="Archived Profiles">
+
+      <app-profiles [profiles]="archivedProfiles$ | async"></app-profiles>
+
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
+

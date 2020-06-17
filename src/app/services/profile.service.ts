@@ -52,6 +52,15 @@ export class ProfileService {
       );
   }
 
+  getAllProfiles(): Observable<NoisyResponse> {
+    const url = `${this.profileUrl}/all`;
+    return this.http.get<NoisyResponse>(url)
+      .pipe(
+        tap(_ => this.log('ProfileService: fetched Profiles response')),
+        catchError(this.handleError<NoisyResponse>('getProfiles'))
+      );
+  }
+
   /** GET profile by id. Will 404 if id not found */
   getProfile(id: number): Observable<NoisyResponse> {
     const url = `${this.profileUrl}/${id}`;

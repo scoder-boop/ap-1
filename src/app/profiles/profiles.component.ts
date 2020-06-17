@@ -1,4 +1,4 @@
-import { Component, OnInit, PipeTransform, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, PipeTransform, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,6 +20,9 @@ import { MessageService } from '../services/message.service';
 })
 
 export class ProfilesComponent implements OnInit {
+
+  @Input()
+  profiles: Profile[];
 
   httpCode: number;
   selectedProfile: Profile;

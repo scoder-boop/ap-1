@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -17,6 +18,7 @@ import { ProfilesComponent } from './profiles/profiles.component';
 import { MessageComponent } from './message/message.component';
 import { ProfileSearchComponent } from './profile-search/profile-search.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.co
 //    ProfileDetailComponent,
     MessageComponent,
     ProfileSearchComponent,
-    ProgressSpinnerComponent
+    ProgressSpinnerComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.co
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
