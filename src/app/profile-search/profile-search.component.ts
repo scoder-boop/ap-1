@@ -5,9 +5,9 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { Profile } from '../profile';
-import { ProfileService } from '../profile.service';
-import { NoisyResponse } from '../noisyResponse';
+import { Profile } from '../model/profile';
+import { NoisyResponse } from '../model/noisyResponse';
+import { ProfileService } from '../services/profile.service';
 
 
 @Component({

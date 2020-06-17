@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Profile } from './profile';
-import { NoisyResponse } from './noisyResponse';
-import { Observable, of } from 'rxjs';
-import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Profile } from '../model/profile';
+import { NoisyResponse } from '../model/noisyResponse';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'

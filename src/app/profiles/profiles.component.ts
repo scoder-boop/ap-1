@@ -8,10 +8,10 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatFormField } from '@angular/material/form-field';
 //import { MatPaginator } from '@angular/material/paginator';
 
-import { Profile } from '../profile';
-import { ProfileObject } from '../profile';
-import { ProfileService } from '../profile.service';
-import { MessageService } from '../message.service';
+import { Profile } from '../model/profile';
+import { ProfileObject } from '../model/profile';
+import { ProfileService } from '../services/profile.service';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-profiles',
