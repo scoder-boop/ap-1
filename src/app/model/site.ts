@@ -4,6 +4,7 @@ export interface Site {
 	connectionString: string;
 	description: string;
 	siteAuthDetails: string;
+  editable: boolean;
 }
 export class Site implements Site{
 	id: number;
@@ -11,4 +12,5 @@ export class Site implements Site{
 	connectionString: string;
 	description: string;
 	siteAuthDetails: string;
+	editable: boolean;
 }

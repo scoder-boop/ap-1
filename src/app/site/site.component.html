@@ -1,1 +1,45 @@
-<p>site works!</p>
+<h2>Sites</h2>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>id</mat-header-cell>
+    <mat-cell *matCellDef="let site"> {{site.id}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Site Name</mat-header-cell>
+    <mat-cell *matCellDef="let site">
+      <div *ngIf="!site.editable">{{site.name}}</div>
+      <div *ngIf="site.editable"><input [(ngModel)]="site.name" placeholder="name" /></div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="type">
+    <mat-header-cell *matHeaderCellDef>Site Type</mat-header-cell>
+    <mat-cell *matCellDef="let site">
+      <div *ngIf="!site.editable">{{site.siteType}}</div>
+      <div *ngIf="site.editable"><input [(ngModel)]="site.siteType" placeholder="type" /></div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="connect">
+    <mat-header-cell *matHeaderCellDef>Connect Via</mat-header-cell>
+    <mat-cell *matCellDef="let site">
+      <div *ngIf="!site.editable">{{site.connectionString}}</div>
+      <div *ngIf="site.editable"><input [(ngModel)]="site.connectionString" placeholder="connect via" /></div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+    <mat-cell *matCellDef="let site">
+      <div *ngIf="!site.editable">{{site.description}}</div>
+      <div *ngIf="site.editable"><input [(ngModel)]="site.description" placeholder="description" /></div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="auth">
+    <mat-header-cell *matHeaderCellDef>Authentication</mat-header-cell>
+    <mat-cell *matCellDef="let site">
+      <div *ngIf="!site.editable">{{site.siteAuthDetails}}</div>
+      <div *ngIf="site.editable"><input [(ngModel)]="site.siteAuthDetails" placeholder="auth details" /></div>
+    </mat-cell>
+  </ng-container>
+
+
+</mat-table>
