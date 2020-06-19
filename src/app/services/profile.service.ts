@@ -38,7 +38,7 @@ export class ProfileService {
   getProfiles(): Observable<NoisyResponse> {
     return this.http.get<NoisyResponse>(this.profileUrl)
       .pipe(
-        tap(_ => this.log('ProfileService: fetched Profiles response')),
+        tap(_ => this.log('ProfileService: fetched Active Profiles')),
         catchError(this.handleError<NoisyResponse>('getProfiles'))
       );
   }
@@ -47,7 +47,7 @@ export class ProfileService {
     const url = `${this.profileUrl}/inactive`;
     return this.http.get<NoisyResponse>(url)
       .pipe(
-        tap(_ => this.log('ProfileService: fetched Profiles response')),
+        tap(_ => this.log('ProfileService: fetched Inactive Profiles')),
         catchError(this.handleError<NoisyResponse>('getProfiles'))
       );
   }
@@ -56,7 +56,7 @@ export class ProfileService {
     const url = `${this.profileUrl}/all`;
     return this.http.get<NoisyResponse>(url)
       .pipe(
-        tap(_ => this.log('ProfileService: fetched Profiles response')),
+        tap(_ => this.log('ProfileService: fetched All Profiles')),
         catchError(this.handleError<NoisyResponse>('getProfiles'))
       );
   }

@@ -6,7 +6,7 @@ import { MatTable } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatFormField } from '@angular/material/form-field';
-//import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { Profile } from '../model/profile';
 import { ProfileObject } from '../model/profile';
@@ -24,8 +24,9 @@ export class ProfilesComponent implements OnInit {
   @Input()
   profiles: Profile[];
 
+  editInProgress: boolean = false;
   httpCode: number;
-  selectedProfile: Profile;
+  copiedProfile: Profile;
   newProfile: Profile;
   displayedColumns: string[] = ['id', 'username', 'firstName', 'lastName', 'email', 'address', 'phoneNumber', 'actions'];
   dataSource;
@@ -42,26 +43,13 @@ export class ProfilesComponent implements OnInit {
   constructor(private profileService: ProfileService, private messageService: MessageService) { }
 
   ngOnInit(): void {
+ //    setTimeout(() => this.dataSource.paginator = this.paginator);
  //   this.getProfiles();
   }
 
   onSelect(profile: Profile): void {
-    this.selectedProfile = profile;
     this.messageService.add(`ProfileService: Selected profile id=${profile.id}`);
   }
-
-/*
-  getProfiles(): void {
-    this.messageService.add(`ProfileService: Getting Profiles`);
-    this.profileService.getProfiles()
-      .subscribe(response => {
-        this.dataSource = new MatTableDataSource(response.data);
-        this.dataSource.sort = this.sort;
-        this.httpCode = response.code;
-      });
-    this.messageService.add(`ProfileService: Profiles done`);
-  }
- */
 
   changeArchiveStatus(profile: Profile): void {
     this.messageService.add(`ProfilesComponent: Trying to change Archive Status`);
@@ -74,6 +62,16 @@ export class ProfilesComponent implements OnInit {
     this.messageService.add(`ProfilesComponent: Profile Archive Status changed`);
   }
 
+  editProfile(profile) {
+    if (this.editInProgress) {
+      this.messageService.add("Save or cancel existing changes first");
+      return;
+    }
+    this.copiedProfile = JSON.parse(JSON.stringify(profile));
+    profile.editable = !profile.editable;
+    this.editInProgress = !this.editInProgress;
+  }
+
   updateProfile(profile: Profile) {
     this.messageService.add(`ProfilesComponent: Updating Profiles`);
     this.profileService.updateProfile(profile)
@@ -82,14 +80,25 @@ export class ProfilesComponent implements OnInit {
       });
     profile.editable = !profile.editable;
     this.messageService.add(`ProfilesComponent: Profile updated`);
-
+    this.editInProgress = !this.editInProgress;
   }
 
-  onRowClicked(): void {
-  }
-
-  editProfile(profile) {
+  cancelUpdate(profile) {
     profile.editable = !profile.editable;
+    profile.username = this.copiedProfile.username;
+    profile.firstName = this.copiedProfile.firstName;
+    profile.lastName = this.copiedProfile.lastName;
+    profile.email = this.copiedProfile.email;
+    profile.address = this.copiedProfile.address;
+    profile.phoneNumber = this.copiedProfile.phoneNumber;
+    this.copiedProfile = new ProfileObject();
+    this.editInProgress = !this.editInProgress;
+ }
+
+  add(): void {
+    this.newProfile = new ProfileObject();
+    this.newProfile.editable = true;
+    this.messageService.add("ProfilesComponent: Create new profile");
   }
 
   addNew(): void {
@@ -110,20 +119,25 @@ export class ProfilesComponent implements OnInit {
             return;
           }
         });
-    console.log("1");
-    console.log(this.profiles);
     this.profiles.push(this.newProfile);
-    console.log("2");
-    console.log(this.profiles);
     this.newProfile = null;
   }
 
-  add(): void {
-    this.newProfile = new ProfileObject();
-    this.newProfile.editable = true;
-    this.messageService.add("ProfilesComponent: Create new profile");
+  onRowClicked(): void {
   }
 
+/*
+  getProfiles(): void {
+    this.messageService.add(`ProfileService: Getting Profiles`);
+    this.profileService.getProfiles()
+      .subscribe(response => {
+        this.dataSource = new MatTableDataSource(response.data);
+        this.dataSource.sort = this.sort;
+        this.httpCode = response.code;
+      });
+    this.messageService.add(`ProfileService: Profiles done`);
+  }
+ */
 /*   search(text: string, pipe: PipeTransform): Profile[] {
     return this.profiles.filter(profile => {
       const term = text.toLowerCase();

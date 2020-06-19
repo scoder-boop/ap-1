@@ -58,12 +58,17 @@
       <mat-header-cell *matHeaderCellDef>Actions </mat-header-cell>
       <mat-cell *matCellDef="let profile">
         <div *ngIf="profile.active">
-          <button mat-button (click)="changeArchiveStatus(profile)">X</button>
-          <button mat-button (click)="editProfile(profile)">Edit</button>
-          <button mat-button (click)="updateProfile(profile)">Save</button>
+          <div *ngIf="!profile.editable">
+            <button mat-button class="mat-raised-button mat-primary" (click)="editProfile(profile)">Edit</button>
+            <button mat-button class="mat-raised-button mat-accent" (click)="changeArchiveStatus(profile)">Archive</button>
+          </div>
+          <div *ngIf="profile.editable">
+            <button mat-button class="mat-raised-button mat-primary" (click)="updateProfile(profile)">Save</button>
+            <button mat-button class="mat-raised-button mat-accent" (click)="cancelUpdate(profile)">Cancel</button>
+          </div>
         </div>
         <div *ngIf="!profile.active">
-          <button mat-button (click)="changeArchiveStatus(profile)">Restore</button>
+          <button mat-button class="mat-raised-button mat-primary" (click)="changeArchiveStatus(profile)">Restore</button>
         </div>
       </mat-cell>
     </ng-container>
@@ -87,7 +92,7 @@
     [pageSizeOptions]="pageSizeOptions"
     [showFirstLastButtons]="true">
   </mat-paginator-->
-
+  <!--mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator-->
 </div>
 
 <div>
