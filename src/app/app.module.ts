@@ -19,7 +19,8 @@ import { MessageComponent } from './message/message.component';
 import { ProfileSearchComponent } from './profile-search/profile-search.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { HomeComponent } from './home/home.component';
-
+import { ProfileSiteComponent } from './profile-site/profile-site.component';
+import { SiteComponent } from './site/site.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { HomeComponent } from './home/home.component';
     MessageComponent,
     ProfileSearchComponent,
     ProgressSpinnerComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileSiteComponent,
+    SiteComponent
   ],
   imports: [
     BrowserModule,
