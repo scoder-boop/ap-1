@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Profile } from '../model/profile';
-import { NoisyResponse } from '../model/noisyResponse';
+import { NoisyProfile } from '../model/noisyProfile';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -22,52 +22,52 @@ export class ProfileService {
     private messageService: MessageService) { }
 
   /* GET heroes whose name contains search term */
-  searchProfiles(term: string): Observable<NoisyResponse> {
+  searchProfiles(term: string): Observable<NoisyProfile> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
       return of();
     }
-    return this.http.get<NoisyResponse>(`${this.profileUrl}/?name=${term}`).pipe(
+    return this.http.get<NoisyProfile>(`${this.profileUrl}/?name=${term}`).pipe(
       tap(x => x.data.length ?
         this.log(`found profiles matching "${term}"`) :
         this.log(`no profiles matching "${term}"`)),
-      catchError(this.handleError<NoisyResponse>('searchProfiles'))
+      catchError(this.handleError<NoisyProfile>('searchProfiles'))
     );
   }
 
-  getProfiles(): Observable<NoisyResponse> {
-    return this.http.get<NoisyResponse>(this.profileUrl)
+  getProfiles(): Observable<NoisyProfile> {
+    return this.http.get<NoisyProfile>(this.profileUrl)
       .pipe(
-        tap(_ => this.log('ProfileService: fetched Active Profiles')),
-        catchError(this.handleError<NoisyResponse>('getProfiles'))
+        tap(_ => this.log('fetched Active Profiles')),
+        catchError(this.handleError<NoisyProfile>('getProfiles'))
       );
   }
 
-  getInactiveProfiles(): Observable<NoisyResponse> {
+  getInactiveProfiles(): Observable<NoisyProfile> {
     const url = `${this.profileUrl}/inactive`;
-    return this.http.get<NoisyResponse>(url)
+    return this.http.get<NoisyProfile>(url)
       .pipe(
-        tap(_ => this.log('ProfileService: fetched Inactive Profiles')),
-        catchError(this.handleError<NoisyResponse>('getProfiles'))
+        tap(_ => this.log('fetched Inactive Profiles')),
+        catchError(this.handleError<NoisyProfile>('getProfiles'))
       );
   }
 
-  getAllProfiles(): Observable<NoisyResponse> {
+  getAllProfiles(): Observable<NoisyProfile> {
     const url = `${this.profileUrl}/all`;
-    return this.http.get<NoisyResponse>(url)
+    return this.http.get<NoisyProfile>(url)
       .pipe(
-        tap(_ => this.log('ProfileService: fetched All Profiles')),
-        catchError(this.handleError<NoisyResponse>('getProfiles'))
+        tap(_ => this.log('fetched All Profiles')),
+        catchError(this.handleError<NoisyProfile>('getProfiles'))
       );
   }
 
   /** GET profile by id. Will 404 if id not found */
-  getProfile(id: number): Observable<NoisyResponse> {
+  getProfile(id: number): Observable<NoisyProfile> {
     const url = `${this.profileUrl}/${id}`;
-    return this.http.get<NoisyResponse>(url)
+    return this.http.get<NoisyProfile>(url)
       .pipe(
         tap(_ => this.log(`fetched profile id=${id}`)),
-        catchError(this.handleError<NoisyResponse>(`getProfile id=${id}`))
+        catchError(this.handleError<NoisyProfile>(`getProfile id=${id}`))
       );
   }
 

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Profile } from '../model/profile';
-import { NoisyResponse } from '../model/noisyResponse';
+import { Site } from '../model/site';
+import { NoisySite } from '../model/noisySite';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -21,18 +21,39 @@ export class SiteService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
-  getAllSites(): Observable<NoisyResponse> {
+  getAllSites(): Observable<NoisySite> {
+    this.messageService.add(`SiteService: Getting all sites`);
     const url = `${this.siteUrl}/all`;
-    return this.http.get<NoisyResponse>(url)
+    return this.http.get<NoisySite>(url)
       .pipe(
-        tap(_ => this.log('SiteService: fetched All Sites')),
-        catchError(this.handleError<NoisyResponse>('getSites'))
+        tap(_ => this.log('fetched All Sites')),
+        catchError(this.handleError<NoisySite>('getSites'))
       );
   }
 
-  /** Log a ProfileService message with the MessageService */
+    /** POST: add a new site to the server */
+    addSite(site: Site): Observable<any> {
+      return this.http.post<Site>(this.siteUrl, site, this.httpOptions)
+      .pipe(
+        tap((newSite: Site) => this.log(`added site id=${newSite.id}`)),
+        catchError(this.handleError<Site>('addSite'))
+      );
+    }
+
+  /** PUT: update the site on the server */
+  updateSite(site: Site): Observable<any> {
+    const url = `${this.siteUrl}/${site.id}`;
+    return this.http.put(url, site, this.httpOptions)
+    .pipe(
+      tap(_ => this.log(`updated site id=${site.id}`)),
+      catchError(this.handleError<any>('updateSite'))
+    );
+  }
+
+
+  /** Log a SiteService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`ProfileService: ${message}`);
+    this.messageService.add(`SiteService: ${message}`);
   }
  /**
  * Handle Http operation that failed.

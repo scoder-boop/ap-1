@@ -33,13 +33,67 @@
       <div *ngIf="site.editable"><input [(ngModel)]="site.description" placeholder="description" /></div>
     </mat-cell>
   </ng-container>
-  <ng-container matColumnDef="auth">
+  <ng-container matColumnDef="siteAuthDetails">
     <mat-header-cell *matHeaderCellDef>Authentication</mat-header-cell>
     <mat-cell *matCellDef="let site">
       <div *ngIf="!site.editable">{{site.siteAuthDetails}}</div>
       <div *ngIf="site.editable"><input [(ngModel)]="site.siteAuthDetails" placeholder="auth details" /></div>
     </mat-cell>
   </ng-container>
+  <ng-container matColumnDef="accept">
+    <mat-header-cell *matHeaderCellDef>Accept Cookies Xpath</mat-header-cell>
+    <mat-cell *matCellDef="let site">
+      <div *ngIf="!site.editable">{{site.acceptXpath}}</div>
+      <div *ngIf="site.editable"><input [(ngModel)]="site.acceptXpath" placeholder="xpath to accept cookies" /></div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="useable">
+    <mat-header-cell *matHeaderCellDef>Site Useable</mat-header-cell>
+    <mat-cell *matCellDef="let site">
+      <div *ngIf="!site.editable">{{site.useable}}</div>
+      <div *ngIf="site.editable"><input [(ngModel)]="site.useable" placeholder="useable" /></div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions </mat-header-cell>
+    <mat-cell *matCellDef="let site">
+      <div *ngIf="site.active">
+        <div *ngIf="!site.editable">
+          <button mat-button class="mat-raised-button mat-primary" (click)="editSite(site)">Edit</button>
+          <button mat-button class="mat-raised-button mat-accent" (click)="changeUseableStatus(site)">Useable</button>
+        </div>
+        <div *ngIf="site.editable">
+          <button mat-button class="mat-raised-button mat-primary" (click)="updateSite(site)">Save</button>
+          <button mat-button class="mat-raised-button mat-accent" (click)="cancelUpdate(site)">Cancel</button>
+        </div>
+      </div>
+      <div *ngIf="!site.active">
+        <button mat-button class="mat-raised-button mat-primary" (click)="changeUseableStatus(site)">Restore</button>
+      </div>
+    </mat-cell>
+  </ng-container>
 
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked()">
+  </mat-row>
 
 </mat-table>
+
+<div>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add()">
+    Add Site
+  </button>
+</div>
+
+<div *ngIf="newSite">
+  <br>
+  <h3>New Site</h3>
+  <mat-form-field class="example-full-width"><input matInput [(ngModel)]="newSite.name" placeholder="name"></mat-form-field>
+  <mat-form-field><input matInput [(ngModel)]="newSite.siteType" placeholder="type"></mat-form-field>
+  <mat-form-field><input matInput [(ngModel)]="newSite.connectionString" placeholder="connectionString"></mat-form-field>
+  <mat-form-field><input matInput [(ngModel)]="newSite.description" placeholder="description"></mat-form-field>
+  <mat-form-field><input matInput [(ngModel)]="newSite.siteAuthDetails" placeholder="siteAuthDetails"></mat-form-field>
+  <mat-form-field><input matInput [(ngModel)]="newSite.acceptXpath" placeholder="acceptXpath"></mat-form-field>
+  <button mat-raised-button color="primary" (click)="addNew()">Save</button>
+</div>
