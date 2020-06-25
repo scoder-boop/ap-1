@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+
 import { Site } from '../model/site';
 import { SiteObject } from '../model/site';
 import { SiteService } from '../services/site.service';
@@ -19,41 +21,42 @@ export class SiteComponent implements OnInit {
   newSite: Site;
   copiedSite: Site;
   httpCode: number;
-  displayedColumns: string[] = ['id', 'name', 'type', 'connect', 'description', 'siteAuthDetails', 'accept', 'useable', 'actions'];
+  selected: 'APP';
+  displayedColumns: string[] = ['name', 'type', 'connect', 'description', 'siteAuthDetails', 'accept', 'useable', 'actions'];
+//  allowedSiteTypes: string[] = ['URL', 'APP'];
   dataSource;
+  componentName = 'SiteComponent';
 
   constructor(private siteService: SiteService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-     this.messageService.add(`SiteComponent: NgInit`);
+     this.messageService.add(`${this.componentName}: NgInit`);
      this.getAllSites();
   }
 
   getAllSites() {
-      this.messageService.add(`SiteComponent: Getting all sites`);
+      this.messageService.add(`${this.componentName}: Getting all sites`);
       this.siteService.getAllSites()
             .subscribe(response => {
               this.sites = response.data;
-              console.log(this.sites);
               this.dataSource = new MatTableDataSource(response.data);
               this.httpCode = response.code;
             });
-      this.messageService.add(`SiteComponent: Got all sites`);
+      this.messageService.add(`${this.componentName}: Got all sites`);
 
   }
 
-    add(): void {
+   add(): void {
       this.newSite = new SiteObject();
       this.newSite.editable = true;
-      this.messageService.add("SiteComponent: Creating new site");
+      this.messageService.add(`${this.componentName}: Creating new site`);
     }
 
   addNew(): void {
-    this.messageService.add("SiteComponent: Creating new site");
-    console.log("new");
-    console.log(this.newSite);
+    this.messageService.add(`${this.componentName}: Creating new site`);
+    this.messageService.add(`${this.componentName}: Selected=${this.selected}`);
     if (!this.newSite.name || !this.newSite.siteType || !this.newSite.connectionString) {
-        this.messageService.add(`SiteComponent: name, type or connection details missing - please update`);
+        this.messageService.add(`${this.componentName}: name, type or connection details missing - please update`);
         return;
     }
     this.newSite.useable = true;
@@ -61,32 +64,32 @@ export class SiteComponent implements OnInit {
         .subscribe(response => {
           this.httpCode = response.code;
           if (this.httpCode == 200) {
-             this.newSite = response.data;
-            this.messageService.add(`SiteComponent: Site added successfully`);
+            this.messageService.add(`${this.componentName}: Site added successfully ID: ${response.data.id}  `);
           } else {
-            this.messageService.add(`SiteComponent: Adding new site failed. Code ${this.httpCode} Message: ${response.data} `);
+            this.messageService.add(`${this.componentName}: Adding new site failed. Code ${this.httpCode} Message: ${response.data} `);
             return;
           }
         });
+    this.newSite.editable = false;
     this.sites.push(this.newSite);
     this.dataSource = new MatTableDataSource(this.sites);
     this.newSite = new SiteObject();
   }
 
   changeUseableStatus(site: Site): void {
-    this.messageService.add(`SitesComponent: Trying to change Archive Status`);
+    this.messageService.add(`${this.componentName}: Trying to change Archive Status`);
     this.sites = this.sites.filter(h => h.id !== site.id);
     site.useable = !site.useable;
     this.siteService.updateSite(site)
       .subscribe(response => {
         this.httpCode = response.code;
       });
-    this.messageService.add(`SitesComponent: Site Archive Status changed`);
+    this.messageService.add(`${this.componentName}: Site Archive Status changed`);
   }
 
   editSite(site: Site) {
     if (this.siteEditInProgress) {
-      this.messageService.add("Save or cancel existing changes first");
+      this.messageService.add(`${this.componentName} Save or cancel existing changes first`);
       return;
     }
     this.copiedSite = JSON.parse(JSON.stringify(site));
@@ -95,13 +98,13 @@ export class SiteComponent implements OnInit {
   }
 
   updateSite(site: Site) {
-    this.messageService.add(`SiteComponent: Updating Site`);
+    this.messageService.add(`${this.componentName}: Updating Site`);
     this.siteService.updateSite(site)
       .subscribe(response => {
         this.httpCode = response.code;
       });
     site.editable = !site.editable;
-    this.messageService.add(`SiteComponent: Site updated`);
+    this.messageService.add(`${this.componentName}: Site updated`);
     this.siteEditInProgress = !this.siteEditInProgress;
   }
 

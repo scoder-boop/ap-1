@@ -21,6 +21,7 @@ import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.co
 import { HomeComponent } from './home/home.component';
 import { ProfileSiteComponent } from './profile-site/profile-site.component';
 import { SiteComponent } from './site/site.component';
+import { ProfileInterestComponent } from './profile-interest/profile-interest.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SiteComponent } from './site/site.component';
     ProgressSpinnerComponent,
     HomeComponent,
     ProfileSiteComponent,
-    SiteComponent
+    SiteComponent,
+    ProfileInterestComponent
   ],
   imports: [
     BrowserModule,

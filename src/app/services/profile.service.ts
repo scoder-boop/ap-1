@@ -21,7 +21,6 @@ export class ProfileService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
-  /* GET heroes whose name contains search term */
   searchProfiles(term: string): Observable<NoisyProfile> {
     if (!term.trim()) {
       // if not search term, return empty hero array.

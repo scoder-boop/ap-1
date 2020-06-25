@@ -103,8 +103,6 @@ export class ProfilesComponent implements OnInit {
 
   addNew(): void {
     this.messageService.add("Profile: Creating new profile");
-    console.log("new");
-    console.log(this.newProfile);
     if (!this.newProfile.username || !this.newProfile.firstName || !this.newProfile.lastName) {
         this.messageService.add(`ProfilesComponent: username, first or last name emtpy - please update`);
         return;
@@ -119,8 +117,11 @@ export class ProfilesComponent implements OnInit {
             return;
           }
         });
+    this.newProfile.editable = false;
     this.profiles.push(this.newProfile);
-    this.newProfile = null;
+    this.dataSource = new MatTableDataSource(this.profiles);
+
+    this.newProfile = new ProfileObject();
   }
 
   onRowClicked(): void {

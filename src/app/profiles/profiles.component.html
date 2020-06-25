@@ -83,8 +83,7 @@
     <mat-cell *matCellDef="let profile"><button class="edit" title="edit profile"
                                                 (click)="editProfile(profile)">Edit</button></mat-cell-->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked()">
-    </mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked()"></mat-row>
   </mat-table>
   <!--mat-paginator
     [length]="length"

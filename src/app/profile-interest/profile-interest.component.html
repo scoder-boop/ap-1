@@ -1,0 +1,26 @@
+<ng-container matColumnDef="id">
+  <mat-header-cell *matHeaderCellDef>id</mat-header-cell>
+  <mat-cell *matCellDef="let profileInterest"> {{profileInterest.id}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="profileId">
+  <mat-header-cell *matHeaderCellDef>Profile Id</mat-header-cell>
+  <mat-cell *matCellDef="let profileInterest"> {{profileInterest.profileId}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="topic">
+  <mat-header-cell *matHeaderCellDef>Topic</mat-header-cell>
+  <mat-cell *matCellDef="let profileInterest">
+    <div *ngIf="!profileInterest.editable">{{profileInterest.topic}}</div>
+    <div *ngIf="profileInterest.editable"><input [(ngModel)]="profileInterest.topic" placeholder="topic" /></div>
+  </mat-cell>
+</ng-container>
+<ng-container matColumnDef="active">
+  <mat-header-cell *matHeaderCellDef>Active</mat-header-cell>
+  <mat-cell *matCellDef="let profileInterest">
+    <div *ngIf="!profileInterest.editable">{{profileInterest.topic}}</div>
+    <div *ngIf="profileInterest.editable"><input [(ngModel)]="profileInterest.active" placeholder="active" /></div>
+  </mat-cell>
+</ng-container>
+<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked()"></mat-row>
+
+
