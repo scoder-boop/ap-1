@@ -1,4 +1,7 @@
-<ng-container matColumnDef="id">
+<div class="example-container mat-elevation-z8">
+<mat-table #table [dataSource]="dataSourceInterest">
+
+  <ng-container matColumnDef="id">
   <mat-header-cell *matHeaderCellDef>id</mat-header-cell>
   <mat-cell *matCellDef="let profileInterest"> {{profileInterest.id}} </mat-cell>
 </ng-container>
@@ -21,6 +24,7 @@
   </mat-cell>
 </ng-container>
 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-<mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked()"></mat-row>
-
+<mat-row *matRowDef="let profileInterest; columns: displayedColumns" (click)="onRowClicked()"></mat-row>
+</mat-table>
+</div>
 

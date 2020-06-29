@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, PipeTransform, ViewChild } from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,6 +10,7 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { Profile } from '../model/profile';
+import { ProfileInterest } from '../model/profileInterest';
 import { ProfileObject } from '../model/profile';
 import { ProfileService } from '../services/profile.service';
 import { MessageService } from '../services/message.service';
@@ -16,7 +18,14 @@ import { MessageService } from '../services/message.service';
 @Component({
   selector: 'app-profiles',
   templateUrl: './profiles.component.html',
-  styleUrls: ['./profiles.component.css']
+  styleUrls: ['./profiles.component.css'],
+  animations: [
+        trigger('detailExpand', [
+        state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden'})),
+        state('expanded', style({height: '*', visibility: 'visible'})),
+        transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      ]),
+    ],
 })
 
 export class ProfilesComponent implements OnInit {
@@ -24,20 +33,25 @@ export class ProfilesComponent implements OnInit {
   @Input()
   profiles: Profile[];
 
+  expandedProfile: Profile | null;
+
   editInProgress: boolean = false;
   httpCode: number;
   copiedProfile: Profile;
   newProfile: Profile;
   displayedColumns: string[] = ['id', 'username', 'firstName', 'lastName', 'email', 'address', 'phoneNumber', 'actions'];
-  dataSource;
+  dataSource = new MatTableDataSource(this.profiles);
+
+//  expandedRow: number;
+//  @ViewChildren('myRow', { read: ViewContainerRef }) containers;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<any>;
 //  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  length = 1000;
-  pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+//  length = 1000;
+//  pageSize = 10;
+//  pageSizeOptions: number[] = [5, 10, 25, 100];
 
 
   constructor(private profileService: ProfileService, private messageService: MessageService) { }
@@ -126,6 +140,7 @@ export class ProfilesComponent implements OnInit {
 
   onRowClicked(): void {
   }
+
 
 /*
   getProfiles(): void {

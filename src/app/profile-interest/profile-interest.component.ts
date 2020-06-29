@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatFormField } from '@angular/material/form-field';
 import { MatPaginator } from '@angular/material/paginator';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { Profile } from '../model/profile';
 import { ProfileInterest } from '../model/profileInterest';
@@ -17,16 +18,27 @@ import { MessageService } from '../services/message.service';
 @Component({
   selector: 'app-profile-interest',
   templateUrl: './profile-interest.component.html',
-  styleUrls: ['./profile-interest.component.css']
+  styleUrls: ['./profile-interest.component.css'],
+   animations: [
+      trigger('detailExpand', [
+        state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
+        state('expanded', style({ height: '*', visibility: 'visible' })),
+        transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      ]),
+    ],
 })
 
 export class ProfileInterestComponent implements OnInit {
+  @Input()
+  chosenProfile: Profile| null;
+  expandedElement: Profile | null;
+
   profileInterests: ProfileInterest[];
   newProfileInterest: ProfileInterest;
   copiedProfileInterest: ProfileInterest;
   httpCode: number;
   displayedColumns: string[] = ['topic', 'active', 'actions'];
-  dataSource;
+  dataSourceInterest = new MatTableDataSource();
   componentName = 'ProfileInterestComponent';
   editInProgress: boolean = false;
 
@@ -34,7 +46,9 @@ export class ProfileInterestComponent implements OnInit {
 
   ngOnInit(): void {
        this.messageService.add(`${this.componentName}: NgInit`);
-//       this.getProfileInterests();
+       if (this.chosenProfile) {
+           this.getProfileInterests(this.chosenProfile);
+       }
   }
 
   getProfileInterests(profile: Profile) {
@@ -42,7 +56,7 @@ export class ProfileInterestComponent implements OnInit {
       this.profileInterestService.getProfileInterests(profile.id)
             .subscribe(response => {
               this.profileInterests = response.data;
-              this.dataSource = new MatTableDataSource(response.data);
+              this.dataSourceInterest = new MatTableDataSource(response.data);
               this.httpCode = response.code;
             });
       this.messageService.add(`${this.componentName}: Got all interests`);
@@ -74,7 +88,7 @@ export class ProfileInterestComponent implements OnInit {
         });
     this.newProfileInterest.editable = false;
     this.profileInterests.push(this.newProfileInterest);
-    this.dataSource = new MatTableDataSource(this.profileInterests);
+    this.dataSourceInterest = new MatTableDataSource(this.profileInterests);
     this.newProfileInterest = new ProfileInterestObject();
   }
 

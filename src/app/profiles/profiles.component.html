@@ -4,8 +4,12 @@
 
 
 <div>
+  <!--div class="example-action-buttons">
+    <button mat-button (click)="accordion.openAll()">Expand All</button>
+    <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+  </div-->
 
-  <mat-table [dataSource]="profiles" class="mat-elevation-z8">
+    <mat-table [dataSource]="profiles" multiTemplateDataRows class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>id</mat-header-cell>
       <mat-cell *matCellDef="let profile"> {{profile.id}} </mat-cell>
@@ -73,19 +77,37 @@
       </mat-cell>
     </ng-container>
 
-    <!--mat-cell *matCellDef="let profile">
-      <div *ngIf="profile.active===true">
-        <button class="delete" title="archive profile" (click)="archive(profile)">PP</button>
-      </div>
-    </mat-cell>
-    <mat-cell *matCellDef="let profile"><button class="save" title="save profile"
-                                                (click)="updateProfile(profile)">Save</button></mat-cell>
-    <mat-cell *matCellDef="let profile"><button class="edit" title="edit profile"
-                                                (click)="editProfile(profile)">Edit</button></mat-cell-->
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let profile" [attr.colspan]="displayedColumns.length">
+        <div class="example-profile-detail" [@detailExpand]="profile == expandedProfile ? 'expanded' : 'collapsed'">
+        <!--div class="element-row" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'" >
+          <table width="100%">
+            <td>{{element.id}}</td>
+            <app-profile-interest [chosenProfile]="element"></app-profile-interest>
+           </table>
+        </div-->
+          <div class="example-profile-description">
+            {{profile.id}}
+            <app-profile-interest [chosenProfile]="profile"></app-profile-interest>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked()"></mat-row>
+    <!--mat-row *matRowDef="let row; columns: displayedColumns" ></mat-row-->
+    <mat-row *matRowDef="let profile; columns: displayedColumns"
+             class="example-element-row"
+             [class.example-expanded-row]="expandedProfile === profile"
+             (click)="expandedProfile = expandedProfile === profile ? null : profile">
+    </mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
   </mat-table>
-  <!--mat-paginator
+
+
+ <!--mat-paginator
     [length]="length"
     [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions"

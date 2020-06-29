@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Site } from '../model/site';
 import { NoisySite } from '../model/noisySite';
 import { MessageService } from './message.service';
